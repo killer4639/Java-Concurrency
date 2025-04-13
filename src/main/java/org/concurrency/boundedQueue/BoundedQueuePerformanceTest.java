@@ -69,7 +69,6 @@ public class BoundedQueuePerformanceTest {
                     readerCounter.incrementAndGet();
                 }
                 if (event.isDeadEvent) {
-                    System.out.println("Dead event detected with reader counter: " + readerCounter.get());
                     break;
                 }
             }

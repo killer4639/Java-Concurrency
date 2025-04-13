@@ -3,12 +3,11 @@ package org.concurrency.boundedQueue;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class SlowestBoundedQueue implements BoundedQueue {
-    private final int size;
+public class SynchronizedBoundedQueue extends BoundedQueue {
     private final Queue<Object> queue;
 
-    public SlowestBoundedQueue(int size) {
-        this.size = size;
+    public SynchronizedBoundedQueue(int size) {
+        super(size);
         this.queue = new LinkedList<>();
     }
 
@@ -27,7 +26,7 @@ public class SlowestBoundedQueue implements BoundedQueue {
 
     public synchronized void put(Object o) {
         try {
-            while (queue.size() >= size) {
+            while (queue.size() >= this.getSize()) {
                 this.wait();
             }
         } catch (InterruptedException e) {

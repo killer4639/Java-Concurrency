@@ -9,8 +9,18 @@ package org.concurrency.boundedQueue;
  * 5. Producer thread should get notified when there is space in the queue, and it was waiting.
  */
 
-public interface BoundedQueue {
-    public Object get();
+public abstract class BoundedQueue {
+    private final int size;
 
-    public void put(Object o);
+    public BoundedQueue(int size) {
+        this.size = size;
+    }
+
+    public abstract Object get();
+
+    public abstract void put(Object o);
+
+    public int getSize() {
+        return size;
+    }
 }

@@ -9,6 +9,7 @@ public class LeakyBucketRateLimiter extends RateLimiter {
 
     private volatile long lastExecutionTime;
     private final long delay;
+    private int possibleTokens = 0;
 
     public LeakyBucketRateLimiter(int rate, int limit) {
         super(rate, limit);
@@ -19,11 +20,20 @@ public class LeakyBucketRateLimiter extends RateLimiter {
     @Override
     public void acquire() {
         synchronized (this) {
-            while ((System.currentTimeMillis() - lastExecutionTime) < delay) ;
-
-            long tokens = (System.currentTimeMillis() - lastExecutionTime) / delay;
-            tokens = Math.min(tokens - 1, getLimit());
-            lastExecutionTime = System.currentTimeMillis() - tokens * delay;
+            possibleTokens += ((System.currentTimeMillis() - lastExecutionTime) / delay);
+            if (possibleTokens > getLimit()) {
+                possibleTokens = getLimit();
+            }
+            if (possibleTokens == 0) {
+                try {
+                    Thread.sleep(delay - (System.currentTimeMillis() - lastExecutionTime));
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+            } else {
+                possibleTokens--;
+            }
+            lastExecutionTime = System.currentTimeMillis();
         }
     }
 }

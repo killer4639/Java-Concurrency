@@ -21,13 +21,13 @@ import java.util.concurrent.atomic.AtomicInteger;
  * 1. The counter is not stopping at exactly the number of events I want it to create
  * Solution: Fixed it with CountDownLatch
  */
-public class BoundedQueuePerformanceTest {
+public class BoundedQueueTest {
     private final int readerThreads;
     private final int writerThreads;
     private final BoundedQueue queue;
     private final CountDownLatch latch;
 
-    public BoundedQueuePerformanceTest(int readerThreads, int writerThreads, BoundedQueue queue) {
+    public BoundedQueueTest(int readerThreads, int writerThreads, BoundedQueue queue) {
         this.readerThreads = readerThreads;
         this.writerThreads = writerThreads;
         this.queue = queue;
@@ -105,7 +105,7 @@ public class BoundedQueuePerformanceTest {
         return threads;
     }
 
-    private class TestEvent {
+    private static class TestEvent {
         private long time;
         private boolean isDeadEvent;
 

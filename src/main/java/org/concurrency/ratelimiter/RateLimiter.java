@@ -9,7 +9,7 @@ public abstract class RateLimiter {
         this.limit = limit;
     }
 
-    public abstract void acquire();
+    public abstract void acquire() throws InterruptedException;
 
     public int getRate() {
         return rate;

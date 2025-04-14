@@ -18,18 +18,14 @@ public class LeakyBucketRateLimiter extends RateLimiter {
     }
 
     @Override
-    public void acquire() {
+    public void acquire() throws InterruptedException {
         synchronized (this) {
             possibleTokens += ((System.currentTimeMillis() - lastExecutionTime) / delay);
             if (possibleTokens > getLimit()) {
                 possibleTokens = getLimit();
             }
             if (possibleTokens == 0) {
-                try {
-                    Thread.sleep(delay - (System.currentTimeMillis() - lastExecutionTime));
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                }
+                Thread.sleep(delay - (System.currentTimeMillis() - lastExecutionTime));
             } else {
                 possibleTokens--;
             }

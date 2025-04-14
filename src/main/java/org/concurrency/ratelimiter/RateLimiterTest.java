@@ -22,10 +22,10 @@ public class RateLimiterTest {
                     Thread.sleep(randomWait);
                     this.rateLimiter.acquire();
                 } catch (InterruptedException e) {
-                    System.out.println("Reader thread interrupted");
+                    System.out.println("Reader thread interrupted: " + Thread.currentThread().getName());
                     break;
                 }
-                System.out.println("Acquired token at time: " + (System.currentTimeMillis() - startedTime) / TimeUnit.SECONDS.toMillis(1));
+                System.out.println("Acquired token at time: " + Thread.currentThread().getName() + " :" + (System.currentTimeMillis() - startedTime) / TimeUnit.SECONDS.toMillis(1));
             }
         };
     }
@@ -39,7 +39,7 @@ public class RateLimiterTest {
         }
 
         try {
-            Thread.sleep(TimeUnit.SECONDS.toMillis(20));
+            Thread.sleep(TimeUnit.SECONDS.toMillis(5));
         } catch (InterruptedException e) {
             System.out.println("Main thread interrupted");
         }

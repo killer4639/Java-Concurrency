@@ -1,11 +1,10 @@
 package org.concurrency;
 
-import org.concurrency.barrier.BarrierTest;
-import org.concurrency.unisexBathroomProblem.UnisexBathroomTest;
+import org.concurrency.multiThreadedMergeSort.MultiThreadedMergeSortTest;
 
 public class Main {
     public static void main(String[] args) {
-        AutomatedTest test = new BarrierTest();
+        AutomatedTest test = new MultiThreadedMergeSortTest();
         test.run();
     }
 }

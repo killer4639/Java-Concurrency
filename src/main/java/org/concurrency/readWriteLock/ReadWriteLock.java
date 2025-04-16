@@ -1,4 +1,4 @@
-package org.concurrency;
+package org.concurrency.readWriteLock;
 
 /**
  * A lock which lets multiple readers read at the same time, but only one writer write at a time.

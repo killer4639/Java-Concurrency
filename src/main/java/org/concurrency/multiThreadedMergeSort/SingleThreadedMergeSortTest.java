@@ -4,10 +4,7 @@ import org.concurrency.AutomatedTest;
 
 import java.util.Random;
 
-/**
- * ForkPool is extreamly optimized for these types of operations
- */
-public class MultiThreadedMergeSortTest implements AutomatedTest {
+public class SingleThreadedMergeSortTest implements AutomatedTest {
     private final static int size = 100000000;
     private final Random random = new Random();
 
@@ -27,12 +24,8 @@ public class MultiThreadedMergeSortTest implements AutomatedTest {
         sorter.sort(arr1, 0, arr1.length - 1);
         System.out.println("Time taken in singlethreaded: " + (System.currentTimeMillis() - start));
 
-        start = System.currentTimeMillis();
-        sorter = new MergeSortWithForkJoinPool(arr2.length);
-        sorter.sort(arr2, 0, arr2.length - 1);
-        System.out.println("Time taken in forkpool: " + (System.currentTimeMillis() - start));
         for (int i = 0; i < size - 1; i++) {
-            if (arr2[i] > arr2[i + 1]) {
+            if (arr1[i] > arr1[i + 1]) {
                 System.out.print(" Wrong " + i + " ");
             }
         }

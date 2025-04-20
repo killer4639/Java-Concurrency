@@ -8,7 +8,7 @@ public class MergeSortWithForkJoinPool extends MergeSort {
 
     public MergeSortWithForkJoinPool(int size) {
         super(size);
-        this.forkJoinPool = new ForkJoinPool(8);
+        this.forkJoinPool = new ForkJoinPool();
     }
 
     @Override
@@ -20,11 +20,13 @@ public class MergeSortWithForkJoinPool extends MergeSort {
         private final int[] arr;
         private final int start;
         private final int end;
+        private boolean completed;
 
         public MergeSortTask(int[] arr, int start, int end) {
             this.arr = arr;
             this.start = start;
             this.end = end;
+            this.completed = false;
         }
 
         @Override
@@ -39,8 +41,12 @@ public class MergeSortWithForkJoinPool extends MergeSort {
 
             invokeAll(mergeSortTask1, mergeSortTask2);
 
-            mergeArray(arr, start, end);
+            mergeArray(arr, start, mid, end);
             return null;
+        }
+
+        public void setCompleted(boolean completed) {
+            this.completed = completed;
         }
     }
 }

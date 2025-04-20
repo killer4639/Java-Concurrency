@@ -29,6 +29,6 @@ public class MultiThreadedMergeSort extends MergeSort {
             System.out.println("Thead Interrupted");
         }
 
-        mergeArray(array, start, end);
+        mergeArray(array, start, mid, end);
     }
 }
